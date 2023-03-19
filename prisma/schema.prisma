@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  phone_number String
+  name  String
+  dni String
+  career String
+  city String
+  password String 
+  last_session DateTime?
+  update_at DateTime @updatedAt
+  created_at DateTime @default(now())
+}
+
+model Orga {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  work_area String
+  web_page String
+  ruc String
+  email String @unique
+  contact_name String
+  contact_number String
+  city String
+  location String
+  business_name String
+  password String
+  last_session DateTime?
+  update_at DateTime @updatedAt
+  created_at DateTime @default(now())
+  publicaciones Publicacion[]
+}
+
+model Publicacion {
+  id           Int     @id @default(autoincrement())
+  titulo       String
+  contenido    String
+  fecha        DateTime @default(now())
+  autor        Orga @relation(fields: [autorId], references: [id])
+  autorId      Int
+}
+
+model Comunidadpedido{
+  id Int @id @default(autoincrement())
+  name String
+  number_phone String
+  order String
+  url_image String @default("https://n9.cl/25rhp")
+}
